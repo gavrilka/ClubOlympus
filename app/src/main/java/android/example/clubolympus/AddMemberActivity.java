@@ -1,5 +1,6 @@
 package android.example.clubolympus;
 
+import android.example.clubolympus.data.ClubOlympusContract.MemberEntry;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -13,6 +14,8 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+
+;
 
 public class AddMemberActivity extends AppCompatActivity {
 
@@ -44,11 +47,11 @@ public class AddMemberActivity extends AppCompatActivity {
                 String selectedGender = (String) parent.getItemAtPosition(position);
                 if(!TextUtils.isEmpty(selectedGender)) {
                     if(selectedGender.equals("Male")){
-                        gender = 1;
+                        gender = MemberEntry.GENDER_MALE;
                     } else if (selectedGender.equals("Female")){
-                        gender = 2;
+                        gender = MemberEntry.GENDER_FEMALE;
                     } else {
-                        gender = 0;
+                        gender = MemberEntry.GENDER_UNKNOWN;
                     }
                 }
             }
