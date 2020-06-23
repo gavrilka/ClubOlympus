@@ -2,6 +2,7 @@ package android.example.clubolympus.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -10,7 +11,18 @@ import androidx.annotation.Nullable;
 
 public class OlympusContentProvider extends ContentProvider {
 
+    private static final int MEMBERS = 111;
+    private static final int MEMBER_ID = 222;
+
     OlympusDbOpenHelper dpOpenHelper;
+
+    private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    static
+    {
+        sURIMatcher.addURI(ClubOlympusContract.AUTHORITY, ClubOlympusContract.PATH_MEMBERS, MEMBERS);
+        sURIMatcher.addURI(ClubOlympusContract.AUTHORITY, ClubOlympusContract.PATH_MEMBERS + "/#", MEMBER_ID);
+    }
+
     @Override
     public boolean onCreate() {
         dpOpenHelper = new OlympusDbOpenHelper(getContext());
