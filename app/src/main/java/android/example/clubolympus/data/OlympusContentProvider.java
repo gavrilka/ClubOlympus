@@ -49,7 +49,7 @@ public class OlympusContentProvider extends ContentProvider {
             case MEMBER_ID:
                 selection = MemberEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                cursor = db.query(MemberEntry.TABLE_NAME, projection, selection
+                cursor = db.query(MemberEntry.TABLE_NAME, projection, selection,
                         selectionArgs, null, null, sortOrder);
                 break;
             default:
