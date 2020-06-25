@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.example.clubolympus.data.ClubOlympusContract.MemberEntry;
 import android.net.Uri;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,16 +53,30 @@ public class OlympusContentProvider extends ContentProvider {
                         selectionArgs, null, null, sortOrder);
                 break;
             default:
-                Toast.makeText(getContext(), "Incorrect URI", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't query incorrect URI" + uri);
         }
         return cursor;
     }
 
-    @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        SQLiteDatabase db = dpOpenHelper.getWritableDatabase();
+
+        int match = uriMatcher.match(uri);
+
+        switch (match) {
+            case MEMBERS:
+                long id = db.insert(MemberEntry.TABLE_NAME, null, values);
+                if (id == -1){
+                    Log.e("insertMethod", "Insertion of data in the table failed for " +
+                            uri);
+                }
+                return ContentUris.withAppendedId(uri, id);
+            default:
+                throw new IllegalArgumentException("Insertion of data in the table failed for " +
+                        uri);
+        }
+
     }
 
     @Override
